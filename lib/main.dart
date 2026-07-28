@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:student_timetable/app/routes/app_pages.dart';
+import 'package:student_timetable/app/routes/app_routes.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const StudyScheduleApp());
+}
+
+class StudyScheduleApp extends StatelessWidget {
+  const StudyScheduleApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: '',
+      debugShowCheckedModeBanner: false,
+      initialRoute: Routes.DASHBOARD,
+      getPages: AppPages.routes,
+    );
+  }
+}
