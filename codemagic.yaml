@@ -1,23 +1,49 @@
 workflows:
-  android-release:
-    name: Android Release Build
-    instance_type: mac_mini_m1
+  android-build:
+    name: Android APK + AAB Build
     max_build_duration: 60
+    instance_type: linux
+    environment:
+      flutter: stable
+    scripts:
+      - name: Clean project
+        script: flutter clean
+      - name: Get dependencies
+        script: flutter pub get
+      - name: Run tests (optional)
+        script: flutter test
+        ignore_failure: true
+      - name: Build APK (release)
+        script: flutter build apk --release
+      - name: Build AAB (release)
+        script: flutter build appbundle --release
+      - name: Debug APK output
+        script: ls -R build/app/outputs/flutter-apk/
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+      - build/app/outputs/bundle/release/*.aab
+
+  ios-build:
+    name: iOS IPA Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
     environment:
       flutter: stable
       xcode: latest
-      java: 17
+      cocoapods: default
     scripts:
-      - name: Get Flutter packages
+      - name: Clean project
+        script: flutter clean
+      - name: Get dependencies
+        script: flutter pub get
+      - name: Install pods
         script: |
-          flutter pub get
-      - name: Build Android App Bundle
-        script: |
-          flutter build appbundle --release
+          cd ios
+          pod install --repo-update
+          cd ..
+      - name: Build iOS (no signing - simulator/archive test)
+        script: flutter build ios --release --no-codesign
+      - name: Build IPA (Codemagic signed build)
+        script: flutter build ipa --release
     artifacts:
-      - build/**/outputs/**/*.aab
-      - build/**/outputs/**/*.apk
-    publishing:
-      email:
-        recipients:
-          - your-email@example.com
+      - build/ios/ipa/*.ipa
