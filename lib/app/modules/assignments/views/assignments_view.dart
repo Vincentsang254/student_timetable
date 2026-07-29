@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:studetra/app/models/assignment_model.dart';
 import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:studetra/app/modules/assignments/controllers/assignments_controller.dart';
+import 'package:studetra/app/widgets/custom_app_bar.dart';
 
 class AssignmentsView extends StatelessWidget {
   AssignmentsView({super.key});
@@ -69,16 +70,75 @@ class AssignmentsView extends StatelessWidget {
     );
   }
 
+  Widget _buildEmptyState(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Assignments',
+        backgroundColor: theme.colorScheme.surface,
+        foregroundColor: theme.colorScheme.onSurface,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 480),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.assignment_outlined,
+                    size: 72,
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'No assignments added',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Create your first assignment to keep track of due dates and deadlines.',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  FilledButton.icon(
+                    onPressed: () => showAddAssignmentDialog(context),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Add Assignment'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => showAddAssignmentDialog(context),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Assignments'),
-        backgroundColor: Colors.deepPurple,
+      appBar: CustomAppBar(
+        title: 'Assignments',
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
       ),
       body: Obx(() {
         if (controller.assignments.isEmpty) {
-          return const Center(child: Text('No assignments added'));
+          return _buildEmptyState(context);
         }
 
         return ListView.builder(
@@ -122,7 +182,6 @@ class AssignmentsView extends StatelessWidget {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showAddAssignmentDialog(context),
-        backgroundColor: Colors.deepPurple,
         child: const Icon(Icons.add),
       ),
     );

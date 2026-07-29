@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studetra/app/routes/app_pages.dart';
 import 'package:studetra/app/routes/app_routes.dart';
+import 'package:studetra/app/widgets/bottom_tabs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ class StudyScheduleApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.DASHBOARD,
       getPages: AppPages.routes,
+      home: const CustomBottomTabs(),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studetra/app/modules/add_unit/controllers/add_unit_controller.dart';
+import 'package:studetra/app/widgets/custom_app_bar.dart';
+import 'package:studetra/app/widgets/custom_button.dart';
 
 class AddUnitView extends GetView<AddUnitController> {
   const AddUnitView({super.key});
@@ -8,10 +10,11 @@ class AddUnitView extends GetView<AddUnitController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Unit'),
+      appBar: CustomAppBar(
+        title: 'Add Unit',
         centerTitle: true,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
@@ -64,26 +67,10 @@ class AddUnitView extends GetView<AddUnitController> {
               ],
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 5,
-                ),
-                onPressed: controller.addUnit,
-                child: const Text(
-                  'Add Unit',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+            CustomButton(
+              label: 'Add Unit',
+              icon: Icons.add,
+              onPressed: controller.addUnit,
             ),
           ],
         ),
