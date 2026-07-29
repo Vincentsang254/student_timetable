@@ -8,7 +8,7 @@ import 'package:studetra/app/widgets/custom_app_bar.dart';
 class DashboardView extends GetView<DashboardController> {
   DashboardView({super.key});
 
-  final AssignmentsController assignmentsController = Get.find();
+  AssignmentsController get assignmentsController => Get.find<AssignmentsController>();
 
   final List<String> sortedDays = const [
     'Monday',

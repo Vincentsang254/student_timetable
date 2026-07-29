@@ -4,7 +4,7 @@ import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.
 import 'package:studetra/app/widgets/custom_app_snackbar.dart';
 
 class AddUnitController extends GetxController {
-  final DashboardController dashboardController = Get.find();
+  DashboardController get dashboardController => Get.find<DashboardController>();
 
   final code = ''.obs;
   final name = ''.obs;

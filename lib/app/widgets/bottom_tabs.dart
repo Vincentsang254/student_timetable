@@ -16,22 +16,24 @@ class CustomBottomTabs extends StatefulWidget {
 class _CustomBottomTabsState extends State<CustomBottomTabs> {
   int currentIndex = 0;
 
-  final pages = [
-    DashboardView(),
-    AssignmentsView(),
-  ];
+  late final List<Widget> pages;
 
   @override
   void initState() {
     super.initState();
 
     if (!Get.isRegistered<DashboardController>()) {
-      Get.put(DashboardController());
+      Get.put(DashboardController(), permanent: true);
     }
 
     if (!Get.isRegistered<AssignmentsController>()) {
-      Get.put(AssignmentsController());
+      Get.put(AssignmentsController(), permanent: true);
     }
+
+    pages = [
+      DashboardView(),
+      AssignmentsView(),
+    ];
   }
 
   @override

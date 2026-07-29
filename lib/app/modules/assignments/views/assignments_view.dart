@@ -9,8 +9,8 @@ import 'package:studetra/app/widgets/custom_app_bar.dart';
 class AssignmentsView extends StatelessWidget {
   AssignmentsView({super.key});
 
-  final AssignmentsController controller = Get.find();
-  final DashboardController dashboardController = Get.find();
+  AssignmentsController get controller => Get.find<AssignmentsController>();
+  DashboardController get dashboardController => Get.find<DashboardController>();
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController unitController = TextEditingController();

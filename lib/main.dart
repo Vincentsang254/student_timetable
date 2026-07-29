@@ -15,11 +15,10 @@ class StudyScheduleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: '',
+      title: 'Studetra',
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.DASHBOARD,
       getPages: AppPages.routes,
-      home: const CustomBottomTabs(),
     );
   }
 }

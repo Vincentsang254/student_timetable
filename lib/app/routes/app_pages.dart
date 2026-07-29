@@ -7,12 +7,13 @@ import 'package:studetra/app/routes/app_routes.dart';
 
 import 'package:studetra/app/modules/dashboard/bindings/dashboard_binding.dart';
 import 'package:studetra/app/modules/dashboard/views/dashboard_view.dart';
+import 'package:studetra/app/widgets/bottom_tabs.dart';
 
 class AppPages {
   static final routes = [
     GetPage(
       name: Routes.DASHBOARD,
-      page: () => DashboardView(),
+      page: () => const CustomBottomTabs(),
       binding: DashboardBinding(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(milliseconds: 350),
