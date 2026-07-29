@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:student_timetable/app/modules/add_unit/bindings/add_unit_binding.dart';
-import 'package:student_timetable/app/modules/add_unit/views/add_unit_view.dart';
-import 'package:student_timetable/app/modules/assignments/bindings/assignments_bindings.dart';
-import 'package:student_timetable/app/modules/assignments/views/assignments_view.dart';
-import 'package:student_timetable/app/routes/app_routes.dart';
+import 'package:studetra/app/modules/add_unit/bindings/add_unit_binding.dart';
+import 'package:studetra/app/modules/add_unit/views/add_unit_view.dart';
+import 'package:studetra/app/modules/assignments/bindings/assignments_bindings.dart';
+import 'package:studetra/app/modules/assignments/views/assignments_view.dart';
+import 'package:studetra/app/routes/app_routes.dart';
 
-import 'package:student_timetable/app/modules/dashboard/bindings/dashboard_binding.dart';
-import 'package:student_timetable/app/modules/dashboard/views/dashboard_view.dart';
+import 'package:studetra/app/modules/dashboard/bindings/dashboard_binding.dart';
+import 'package:studetra/app/modules/dashboard/views/dashboard_view.dart';
 
 class AppPages {
   static final routes = [

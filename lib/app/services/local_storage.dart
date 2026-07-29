@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_timetable/app/models/unit_model.dart';
-import 'package:student_timetable/app/models/assignment_model.dart';
+import 'package:studetra/app/models/unit_model.dart';
+import 'package:studetra/app/models/assignment_model.dart';
 
 class LocalStorage {
   static const String unitsKey = 'units';

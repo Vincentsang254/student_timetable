@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student_timetable/app/modules/add_unit/controllers/add_unit_controller.dart';
+import 'package:studetra/app/modules/add_unit/controllers/add_unit_controller.dart';
 
 class AddUnitView extends GetView<AddUnitController> {
   const AddUnitView({super.key});

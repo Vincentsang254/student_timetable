@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:student_timetable/app/models/assignment_model.dart';
-import 'package:student_timetable/app/services/local_storage.dart';
+import 'package:studetra/app/models/assignment_model.dart';
+import 'package:studetra/app/services/local_storage.dart';
 
 class AssignmentsController extends GetxController {
   var assignments = <Assignment>[].obs;

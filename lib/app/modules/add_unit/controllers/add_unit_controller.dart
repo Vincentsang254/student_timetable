@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:student_timetable/app/models/unit_model.dart';
-import 'package:student_timetable/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:student_timetable/app/widgets/custom_app_snackbar.dart';
+import 'package:studetra/app/models/unit_model.dart';
+import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:studetra/app/widgets/custom_app_snackbar.dart';
 
 class AddUnitController extends GetxController {
   final DashboardController dashboardController = Get.find();

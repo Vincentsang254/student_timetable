@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student_timetable/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:student_timetable/app/modules/assignments/controllers/assignments_controller.dart';
+import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:studetra/app/modules/assignments/controllers/assignments_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
   DashboardView({super.key});

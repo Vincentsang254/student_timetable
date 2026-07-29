@@ -1,9 +1,9 @@
 // lib/app/modules/assignments/views/assignments_view.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student_timetable/app/models/assignment_model.dart';
-import 'package:student_timetable/app/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:student_timetable/app/modules/assignments/controllers/assignments_controller.dart';
+import 'package:studetra/app/models/assignment_model.dart';
+import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:studetra/app/modules/assignments/controllers/assignments_controller.dart';
 
 class AssignmentsView extends StatelessWidget {
   AssignmentsView({super.key});

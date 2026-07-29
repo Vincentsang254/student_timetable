@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student_timetable/app/routes/app_pages.dart';
-import 'package:student_timetable/app/routes/app_routes.dart';
+import 'package:studetra/app/routes/app_pages.dart';
+import 'package:studetra/app/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

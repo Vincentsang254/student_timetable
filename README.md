@@ -1,4 +1,4 @@
-# student_timetable
+# Studetra
 
 A new Flutter project.
 
