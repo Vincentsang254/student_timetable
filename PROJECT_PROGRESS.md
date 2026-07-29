@@ -14,6 +14,7 @@
 ## Still Pending / Recommended Next Steps
 - Test the app on a real Android device or emulator.
 - Generate and configure a real Android signing key and update release signing settings.
+- Temporarily enabled Android release signing in the Gradle config and Codemagic workflow so the APK build uses a keystore generated from Codemagic environment variables.
 - Review and refine the app icon, splash screen, and visual branding.
 - Add screenshots and a feature graphic for the Play Store listing.
 - Create a privacy policy if required for app distribution.

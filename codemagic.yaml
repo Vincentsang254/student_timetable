@@ -21,7 +21,7 @@ workflows:
           mkdir -p android/app
           echo "$CM_KEYSTORE_BASE64" | base64 -d > android/app/upload-keystore.jks
           cat > android/key.properties <<EOF
-          storeFile=app/upload-keystore.jks
+          storeFile=android/app/upload-keystore.jks
           storePassword=$CM_KEYSTORE_PASSWORD
           keyAlias=$CM_KEY_ALIAS
           keyPassword=$CM_KEY_PASSWORD

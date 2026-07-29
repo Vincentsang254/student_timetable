@@ -9,10 +9,16 @@ plugins {
 }
 
 val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("key.properties")
-val hasSigningConfig = keystorePropertiesFile.exists()
+val keystorePropertiesFile = rootProject.file("android/key.properties")
+val fallbackKeystorePropertiesFile = rootProject.file("key.properties")
+val actualKeystorePropertiesFile = if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile
+} else {
+    fallbackKeystorePropertiesFile
+}
+val hasSigningConfig = actualKeystorePropertiesFile.exists()
 if (hasSigningConfig) {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    keystoreProperties.load(FileInputStream(actualKeystorePropertiesFile))
 }
 
 android {
