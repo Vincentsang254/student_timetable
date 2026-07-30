@@ -50,18 +50,6 @@ class _CustomBottomTabsState extends State<CustomBottomTabs> {
         children: pages,
       ),
 
-      floatingActionButton: currentIndex == 0
-          ? FloatingActionButton(
-              backgroundColor: Colors.deepPurple,
-              onPressed: () => Get.toNamed(Routes.ADD_UNIT),
-              child: const Icon(Icons.add),
-            )
-          : FloatingActionButton(
-              backgroundColor: Colors.deepPurple,
-              onPressed: () => Get.toNamed(Routes.ADD_ASSIGNMENT),
-              child: const Icon(Icons.add),
-            ),
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         selectedItemColor: Colors.deepPurple,

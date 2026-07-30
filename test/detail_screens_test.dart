@@ -5,6 +5,7 @@ import 'package:studetra/app/models/assignment_model.dart';
 import 'package:studetra/app/models/unit_model.dart';
 import 'package:studetra/app/modules/assignment_details/views/assignment_details_view.dart';
 import 'package:studetra/app/modules/unit_details/views/unit_details_view.dart';
+import 'package:studetra/app/widgets/bottom_tabs.dart';
 
 void main() {
   testWidgets('shows unit details screen content', (tester) async {
@@ -42,5 +43,17 @@ void main() {
     expect(find.text('Assignment details'), findsOneWidget);
     expect(find.text('Lab report'), findsOneWidget);
     expect(find.text('Submit the final draft'), findsOneWidget);
+  });
+
+  testWidgets('shows assignment actions directly on the assignments tab', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const GetMaterialApp(home: CustomBottomTabs()));
+
+    await tester.tap(find.text('Assignments'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(FloatingActionButton), findsNothing);
+    expect(find.text('Add Assignment'), findsOneWidget);
   });
 }

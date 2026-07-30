@@ -122,12 +122,6 @@ class AssignmentsView extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
-                FilledButton.icon(
-                  onPressed: () => showAddAssignmentDialog(context),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add Assignment'),
-                ),
               ],
             ),
           ),
@@ -136,90 +130,111 @@ class AssignmentsView extends StatelessWidget {
     );
   }
 
+  Widget _buildActionButtons(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            FilledButton.icon(
+              onPressed: () => Get.toNamed(Routes.ADD_UNIT),
+              icon: const Icon(Icons.school_outlined),
+              label: const Text('Add Unit'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => showAddAssignmentDialog(context),
+              icon: const Icon(Icons.add_task_outlined),
+              label: const Text('Add Assignment'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final body = Obx(() {
-      if (controller.assignments.isEmpty) {
-        return _buildEmptyState(context);
-      }
+      final content = controller.assignments.isEmpty
+          ? _buildEmptyState(context)
+          : ListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: controller.assignments.length,
+              itemBuilder: (context, index) {
+                final assignment = controller.assignments[index];
+                return Card(
+                  elevation: 2,
+                  margin: const EdgeInsets.symmetric(vertical: 6),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      assignment.title,
+                      style: TextStyle(
+                        decoration: assignment.isCompleted
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Unit: ${assignment.unitCode}\n'
+                      'Due: ${assignment.dueDate}\n'
+                      'Desc: ${assignment.description}',
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    leading: Checkbox(
+                      value: assignment.isCompleted,
+                      onChanged: (_) {
+                        controller.toggleComplete(assignment.id);
+                        CustomAppSnackbar.show(
+                          title: 'Updated',
+                          message: assignment.isCompleted
+                              ? 'Marked pending'
+                              : 'Marked completed',
+                          isError: false,
+                        );
+                      },
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        controller.deleteAssignment(assignment.id);
+                        CustomAppSnackbar.show(
+                          title: 'Deleted',
+                          message: 'Assignment removed',
+                          isError: false,
+                        );
+                      },
+                    ),
+                    onTap: () => Get.toNamed(
+                      Routes.ASSIGNMENT_DETAILS,
+                      arguments: assignment,
+                    ),
+                  ),
+                );
+              },
+            );
 
-      return ListView.builder(
-        padding: const EdgeInsets.all(12),
-        itemCount: controller.assignments.length,
-        itemBuilder: (context, index) {
-          final assignment = controller.assignments[index];
-          return Card(
-            elevation: 2,
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              title: Text(
-                assignment.title,
-                style: TextStyle(
-                  decoration: assignment.isCompleted
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                ),
-              ),
-              subtitle: Text(
-                'Unit: ${assignment.unitCode}\n'
-                'Due: ${assignment.dueDate}\n'
-                'Desc: ${assignment.description}',
-                style: const TextStyle(fontSize: 14),
-              ),
-              leading: Checkbox(
-                value: assignment.isCompleted,
-                onChanged: (_) {
-                  controller.toggleComplete(assignment.id);
-                  CustomAppSnackbar.show(
-                    title: 'Updated',
-                    message: assignment.isCompleted
-                        ? 'Marked pending'
-                        : 'Marked completed',
-                    isError: false,
-                  );
-                },
-              ),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  controller.deleteAssignment(assignment.id);
-                  CustomAppSnackbar.show(
-                    title: 'Deleted',
-                    message: 'Assignment removed',
-                    isError: false,
-                  );
-                },
-              ),
-              onTap: () => Get.toNamed(
-                Routes.ASSIGNMENT_DETAILS,
-                arguments: assignment,
-              ),
-            ),
-          );
-        },
+      return Column(
+        children: [
+          Expanded(child: content),
+          _buildActionButtons(context),
+        ],
       );
     });
 
     if (!showAppBar) {
-      return Scaffold(
-        body: body,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => showAddAssignmentDialog(context),
-          child: const Icon(Icons.add),
-        ),
-      );
+      return Scaffold(body: body);
     }
 
     return Scaffold(
       appBar: _buildAppBar(context),
       body: body,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showAddAssignmentDialog(context),
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

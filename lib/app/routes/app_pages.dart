@@ -35,13 +35,6 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 350),
     ),
     GetPage(
-      name: Routes.ADD_ASSIGNMENT,
-      page: () => AssignmentsView(),
-      binding: AssignmentsBinding(),
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(milliseconds: 350),
-    ),
-    GetPage(
       name: Routes.UNIT_DETAILS,
       page: () => UnitDetailsView(unit: Get.arguments as dynamic),
       transition: Transition.cupertino,
