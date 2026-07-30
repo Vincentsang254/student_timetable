@@ -5,6 +5,7 @@ import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.
 import 'package:studetra/app/modules/assignments/controllers/assignments_controller.dart';
 import 'package:studetra/app/routes/app_routes.dart';
 import 'package:studetra/app/widgets/custom_app_bar.dart';
+import 'package:studetra/app/widgets/custom_app_snackbar.dart';
 
 class DashboardView extends GetView<DashboardController> {
   DashboardView({super.key, this.showAppBar = true});
@@ -89,6 +90,54 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
+  void _showEditUnitDialog(BuildContext context, Unit unit) {
+    final codeController = TextEditingController(text: unit.code);
+    final nameController = TextEditingController(text: unit.name);
+    final lecturerController = TextEditingController(text: unit.lecturer);
+    final venueController = TextEditingController(text: unit.venue);
+    final startTimeController = TextEditingController(text: unit.startTime);
+    final endTimeController = TextEditingController(text: unit.endTime);
+    final dayController = TextEditingController(text: unit.day);
+
+    Get.defaultDialog(
+      title: 'Edit Unit',
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextField(controller: codeController, decoration: const InputDecoration(labelText: 'Code')),
+            TextField(controller: nameController, decoration: const InputDecoration(labelText: 'Name')),
+            TextField(controller: lecturerController, decoration: const InputDecoration(labelText: 'Lecturer')),
+            TextField(controller: venueController, decoration: const InputDecoration(labelText: 'Venue')),
+            TextField(controller: dayController, decoration: const InputDecoration(labelText: 'Day')),
+            TextField(controller: startTimeController, decoration: const InputDecoration(labelText: 'Start Time')),
+            TextField(controller: endTimeController, decoration: const InputDecoration(labelText: 'End Time')),
+          ],
+        ),
+      ),
+      textConfirm: 'Save',
+      textCancel: 'Cancel',
+      onConfirm: () async {
+        final updatedUnit = unit.copyWith(
+          code: codeController.text,
+          name: nameController.text,
+          lecturer: lecturerController.text,
+          venue: venueController.text,
+          day: dayController.text,
+          startTime: startTimeController.text,
+          endTime: endTimeController.text,
+        );
+
+        await controller.updateUnit(unit, updatedUnit);
+        Get.back();
+        CustomAppSnackbar.show(
+          title: 'Updated',
+          message: 'Unit updated',
+          isError: false,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -134,33 +183,57 @@ class DashboardView extends GetView<DashboardController> {
                     subtitle: Text(
                       'Lecturer: ${unit.lecturer}\nTime: ${unit.startTime} - ${unit.endTime}\nVenue: ${unit.venue}',
                     ),
-                    trailing: Obx(() {
-                      final pending = assignmentsController.pendingCountForUnit(
-                        unit.code,
-                      );
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Obx(() {
+                          final pending = assignmentsController.pendingCountForUnit(
+                            unit.code,
+                          );
 
-                      if (pending == 0) {
-                        return const SizedBox.shrink();
-                      }
+                          if (pending == 0) {
+                            return const SizedBox.shrink();
+                          }
 
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 6,
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              '$pending',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        }),
+                        const SizedBox(width: 8),
+                        PopupMenuButton<String>(
+                          onSelected: (value) async {
+                            if (value == 'edit') {
+                              _showEditUnitDialog(context, unit);
+                            } else if (value == 'delete') {
+                              await controller.deleteUnit(unit);
+                              CustomAppSnackbar.show(
+                                title: 'Deleted',
+                                message: 'Unit removed',
+                                isError: false,
+                              );
+                            }
+                          },
+                          itemBuilder: (context) => const [
+                            PopupMenuItem(value: 'edit', child: Text('Edit')),
+                            PopupMenuItem(value: 'delete', child: Text('Delete')),
+                          ],
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          '$pending',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    }),
+                      ],
+                    ),
                     onTap: () => Get.toNamed(Routes.UNIT_DETAILS, arguments: unit as Unit),
                   ),
                 );

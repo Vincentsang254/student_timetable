@@ -30,4 +30,18 @@ class DashboardController extends GetxController {
 
     await LocalStorage.saveUnits(units);
   }
+
+  Future<void> updateUnit(Unit oldUnit, Unit updatedUnit) async {
+    final index = units.indexWhere(
+      (u) =>
+          u.code == oldUnit.code &&
+          u.day == oldUnit.day &&
+          u.startTime == oldUnit.startTime,
+    );
+
+    if (index != -1) {
+      units[index] = updatedUnit;
+      await LocalStorage.saveUnits(units);
+    }
+  }
 }

@@ -4,10 +4,16 @@ import 'package:get/get.dart';
 import 'package:studetra/app/models/assignment_model.dart';
 import 'package:studetra/app/models/unit_model.dart';
 import 'package:studetra/app/modules/assignment_details/views/assignment_details_view.dart';
+import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:studetra/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:studetra/app/modules/unit_details/views/unit_details_view.dart';
 import 'package:studetra/app/widgets/bottom_tabs.dart';
 
 void main() {
+  setUp(() {
+    Get.reset();
+  });
+
   testWidgets('shows unit details screen content', (tester) async {
     final unit = Unit(
       code: 'IT101',
@@ -55,5 +61,30 @@ void main() {
 
     expect(find.byType(FloatingActionButton), findsNothing);
     expect(find.text('Add Assignment'), findsOneWidget);
+  });
+
+  testWidgets('shows edit and delete actions for a unit', (tester) async {
+    final controller = Get.put(DashboardController(), permanent: true);
+    controller.units.assignAll([
+      Unit(
+        code: 'IT101',
+        name: 'Programming 101',
+        lecturer: 'Dr. Smith',
+        day: 'Monday',
+        startTime: '09:00',
+        endTime: '11:00',
+        venue: 'Lab 1',
+      ),
+    ]);
+
+    await tester.pumpWidget(
+      const GetMaterialApp(home: DashboardView(showAppBar: false)),
+    );
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Edit'), findsOneWidget);
+    expect(find.text('Delete'), findsOneWidget);
   });
 }
