@@ -5,19 +5,25 @@ class CustomAppSnackbar {
   static void show({
     required String title,
     required String message,
-    IconData icon = Icons.info_outline,
-    Color backgroundColor = Colors.black87,
-    Color textColor = Colors.white,
+    IconData icon = Icons.check_circle_outline,
+    bool isError = false,
+    Color? textColor,
   }) {
+    final bgColor = isError ? Colors.red.shade600 : Colors.green.shade600;
+    final iconData = isError ? Icons.error_outline : icon;
+    final fgColor = textColor ?? Colors.white;
+
     Get.rawSnackbar(
-      snackPosition: SnackPosition.BOTTOM,
-      margin: const EdgeInsets.all(16),
-      borderRadius: 12,
-      backgroundColor: backgroundColor,
+      snackPosition: SnackPosition.TOP,
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      borderRadius: 14,
+      backgroundColor: bgColor,
       duration: const Duration(seconds: 3),
+      animationDuration: const Duration(milliseconds: 250),
+      forwardAnimationCurve: Curves.easeOutCubic,
       messageText: Row(
         children: [
-          Icon(icon, color: textColor),
+          Icon(iconData, color: fgColor),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -26,7 +32,7 @@ class CustomAppSnackbar {
                 Text(
                   title,
                   style: TextStyle(
-                    color: textColor,
+                    color: fgColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -35,7 +41,7 @@ class CustomAppSnackbar {
                 Text(
                   message,
                   style: TextStyle(
-                    color: textColor.withOpacity(0.9),
+                    color: fgColor.withOpacity(0.9),
                     fontSize: 14,
                   ),
                 ),

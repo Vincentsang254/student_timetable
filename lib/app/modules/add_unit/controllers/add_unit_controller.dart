@@ -34,6 +34,7 @@ class AddUnitController extends GetxController {
       CustomAppSnackbar.show(
         title: 'Error',
         message: 'All fields are required',
+        isError: true,
       );
       return;
     }
@@ -56,6 +57,7 @@ class AddUnitController extends GetxController {
     CustomAppSnackbar.show(
       title: 'Success',
       message: 'Unit added to timetable',
+      isError: false,
     );
   }
 

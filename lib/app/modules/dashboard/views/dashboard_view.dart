@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studetra/app/models/unit_model.dart';
 import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:studetra/app/modules/assignments/controllers/assignments_controller.dart';
 import 'package:studetra/app/routes/app_routes.dart';
 import 'package:studetra/app/widgets/custom_app_bar.dart';
 
 class DashboardView extends GetView<DashboardController> {
-  DashboardView({super.key});
+  DashboardView({super.key, this.showAppBar = true});
+
+  final bool showAppBar;
 
   AssignmentsController get assignmentsController => Get.find<AssignmentsController>();
 
@@ -28,54 +31,57 @@ class DashboardView extends GetView<DashboardController> {
     'Saturday': Colors.tealAccent,
   };
 
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return CustomAppBar(
+      title: 'Units',
+      centerTitle: false,
+      backgroundColor: theme.colorScheme.surface,
+      foregroundColor: theme.colorScheme.onSurface,
+    );
+  }
+
   Widget _buildEmptyState(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Units',
-        centerTitle: false,
-        backgroundColor: theme.colorScheme.surface,
-        foregroundColor: theme.colorScheme.onSurface,
-      ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 480),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.school_outlined,
-                    size: 72,
-                    color: theme.colorScheme.primary,
+    return SafeArea(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.school_outlined,
+                  size: 72,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'No units added',
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'No units added',
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Add your first unit to start building your weekly timetable.',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Add your first unit to start building your weekly timetable.',
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  FilledButton.icon(
-                    onPressed: () => Get.toNamed(Routes.ADD_UNIT),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Add Unit'),
-                  ),
-                ],
-              ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                FilledButton.icon(
+                  onPressed: () => Get.toNamed(Routes.ADD_UNIT),
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add Unit'),
+                ),
+              ],
             ),
           ),
         ),
@@ -155,6 +161,7 @@ class DashboardView extends GetView<DashboardController> {
                         ),
                       );
                     }),
+                    onTap: () => Get.toNamed(Routes.UNIT_DETAILS, arguments: unit as Unit),
                   ),
                 );
               }),

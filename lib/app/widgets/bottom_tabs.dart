@@ -5,6 +5,7 @@ import '../modules/assignments/views/assignments_view.dart';
 import '../modules/dashboard/controllers/dashboard_controller.dart';
 import '../modules/assignments/controllers/assignments_controller.dart';
 import '../routes/app_routes.dart';
+import '../widgets/custom_app_bar.dart';
 
 class CustomBottomTabs extends StatefulWidget {
   const CustomBottomTabs({super.key});
@@ -31,14 +32,19 @@ class _CustomBottomTabsState extends State<CustomBottomTabs> {
     }
 
     pages = [
-      DashboardView(),
-      AssignmentsView(),
+      DashboardView(showAppBar: false),
+      AssignmentsView(showAppBar: false),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        title: currentIndex == 0 ? 'Classes' : 'Assignments',
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
+      ),
       body: IndexedStack(
         index: currentIndex,
         children: pages,
