@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:studetra/app/models/assignment_model.dart';
 import 'package:studetra/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:studetra/app/modules/assignments/controllers/assignments_controller.dart';
+import 'package:studetra/app/routes/app_routes.dart';
 import 'package:studetra/app/widgets/custom_app_bar.dart';
 import 'package:studetra/app/widgets/custom_app_snackbar.dart';
 
