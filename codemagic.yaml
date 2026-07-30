@@ -7,7 +7,7 @@ workflows:
     environment:
       flutter: stable
       android_signing:
-        - rentora-upload-key
+        - studetra-upload-key
 
     scripts:
       - flutter clean
